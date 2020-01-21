@@ -114,7 +114,7 @@ def save_state():
 
 
 @app.route('/load')
-def save_state():
+def load_state():
     with open(f'{ROM_NAME}.sav', 'rb') as fp:
         pb.load_state(fp)
         return 'loaded'
