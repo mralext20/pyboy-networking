@@ -4,12 +4,13 @@ from io import BytesIO
 from flask import Flask, send_file, render_template
 from pyboy import PyBoy, windowevent, window
 from io import BytesIO
-
+from os import environ
 
 app = Flask(__name__, template_folder='template')
 
 
-ROM_NAME = 'pkmnred.gb'
+ROM_NAME = 'rom/' + environ['ROM_LOCATION']
+
 
 pb = PyBoy(ROM_NAME, window_type=None)
 pb.set_emulation_speed(1)
