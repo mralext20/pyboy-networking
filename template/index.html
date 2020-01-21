@@ -1,0 +1,25 @@
+<!doctype html>
+<title>PYBoy tetris</title>
+<img src="{{url_for('get_frame')}}" id="frame" width=320>
+
+<script type='text/javascript' src="/static/script.js"></script>
+
+<div>
+
+
+	<button onclick="fetch('/up')">up</button>
+	<br>
+	<button onclick=" fetch('/left')">left </button>
+	<button onclick="fetch('/right')">Right</button>
+	<button onclick="fetch('/b')">b</button>
+	<button onclick="fetch('/a')">a</button>
+	<br>
+	<button onclick="fetch('/down')">Down</button>
+	<br>
+	<br>
+
+	<button onclick="fetch('/select')">select</button>
+
+	<button onclick="fetch('/start')">start</button>
+
+</div>
