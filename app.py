@@ -3,6 +3,8 @@ from io import BytesIO
 
 from flask import Flask, send_file, render_template
 from pyboy import PyBoy, windowevent, window
+from io import BytesIO
+
 
 app = Flask(__name__, template_folder='template')
 
@@ -10,6 +12,13 @@ app = Flask(__name__, template_folder='template')
 ROM_NAME = 'pkmnred.gb'
 
 pb = PyBoy(ROM_NAME, window_type=None)
+pb.set_emulation_speed(1)
+pb.tick()
+
+save = BytesIO()
+save.seek(0)
+pb.save_state(save)
+save.seek(0)
 
 
 @app.before_first_request
@@ -118,6 +127,12 @@ def load_state():
     with open(f'{ROM_NAME}.sav', 'rb') as fp:
         pb.load_state(fp)
         return 'loaded'
+
+
+@app.route('/reset')
+def reset_state():
+    pb.load_state(save)
+    return 'loaded'
 
 
 @app.route('/')
