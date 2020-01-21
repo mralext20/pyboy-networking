@@ -1,3 +1,4 @@
+import threading
 from io import BytesIO
 
 from flask import Flask, send_file, render_template
@@ -5,10 +6,11 @@ from pyboy import PyBoy, windowevent, window
 
 app = Flask(__name__, template_folder='template')
 
-import threading
 
+ROM_NAME = 'pkmnred.gb'
 
-pb = PyBoy('pkmn.gb', window_type=None )
+pb = PyBoy(ROM_NAME, window_type=None)
+
 
 @app.before_first_request
 def runningjob():
@@ -25,6 +27,7 @@ def serve_pil_image(pil_img):
     pil_img.save(img_io, 'jpeg', quality=70)
     img_io.seek(0)
     return send_file(img_io, mimetype='image/jpeg')
+
 
 @app.route('/up')
 def up_key():
@@ -89,10 +92,12 @@ def b_key():
     pb.send_input(windowevent.RELEASE_BUTTON_B)
     return "OK"
 
+
 @app.route('/speed/<int:x>')
 def set_speed(x):
     pb.set_emulation_speed(x)
     return f"set speed to {x}"
+
 
 @app.route('/frame')
 def get_frame():
@@ -100,10 +105,26 @@ def get_frame():
     frame = frame.convert('RGB')
     return serve_pil_image(frame)
 
+
+@app.route('/save')
+def save_state():
+    with open(f'{ROM_NAME}.sav', 'wb') as fp:
+        pb.save_state(fp)
+        return 'saved'
+
+
+@app.route('/load')
+def save_state():
+    with open(f'{ROM_NAME}.sav', 'rb') as fp:
+        pb.load_state(fp)
+        return 'loaded'
+
+
 @app.route('/')
 def index():
     gametitle = pb.get_cartridge_title()
     return render_template('index.html', gametitle=gametitle)
+
 
 if __name__ == "__main__":
     app.run()
