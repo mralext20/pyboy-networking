@@ -1,4 +1,4 @@
-FROM pyboy:buster
+FROM pyboy:alpine
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt

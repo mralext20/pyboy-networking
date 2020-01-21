@@ -9,7 +9,7 @@ from os import environ
 app = Flask(__name__, template_folder='template')
 
 
-ROM_NAME = 'rom/' + environ['ROM_LOCATION']
+ROM_NAME = 'rom/' + environ['ROM_NAME']
 
 
 pb = PyBoy(ROM_NAME, window_type=None)
