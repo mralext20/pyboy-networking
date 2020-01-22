@@ -1,4 +1,4 @@
-FROM mralext20/pyboy:alpine
+FROM mralext20/pyboy:buster
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
