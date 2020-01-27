@@ -1,4 +1,4 @@
-FROM mralext20/pyboy:buster
+FROM baekalfen/pyboy:buster-latest
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
